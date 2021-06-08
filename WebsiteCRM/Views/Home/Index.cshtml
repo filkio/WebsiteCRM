@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <title>CRM. Tables</title>
+</head>
+<body>
+    <div class="container-fluid d-flex p-1 align-items-stretch">
+        <div class="navigation p-1">
+            <ul class="nav flex-column" id="my-nav-items">
+                <li class="nav-item">
+                    <a onclick="GetUsers(this)" id="menu-item1" class="nav-link" href="#">Пользователи</a>
+                </li>
+                <li class="nav-item">
+                    <a onclick="GetSources(this)" id="menu-item2" class="nav-link" href="#">Источники</a>
+                </li>
+                <li class="nav-item">
+                    <a onclick="GetSegments(this)" id="menu-item3" class="nav-link" href="#">Сегменты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="menu-item4" href="#">API</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" id="menu-item5" href="#">Отключена</a>
+                </li>
+            </ul>
+        </div>
+        <div class="work_panel" , style="width:90%;">
+            <div class="table_panel">
+                <table class="table table-striped" id="myTable">
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/site.js"></script>
+</body>
+</html>
