@@ -36,6 +36,7 @@ namespace WebsiteCRM.Repository.Responces
             FirstName = userEntity.FirstName;
             LastName = userEntity.LastName;
             MiddleName = userEntity.MiddleName;
+            if(userEntity.SourceEntity != null)
             SourceId = userEntity.SourceEntity.Id;
             Type = userEntity.UserTypeEntity.Type;
         }

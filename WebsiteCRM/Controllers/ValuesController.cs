@@ -90,6 +90,15 @@ namespace WebsiteCRM.Controllers
             SegmentEntity deleteSegment = db.Segments.Where(s => s.Id == guid).Include(s => s.UserEntities).FirstOrDefault();
             FullRemoveSegmentFromDb(db, deleteSegment);
         }
+        [HttpDelete("removeuseridentifier/{guid}")]
+        public void RemoveUserIdentifier(Guid guid)
+        {
+            var db = new FilkioCrmContext();
+            UserIdentifierEntity deleteIdentifier = db.UserIdentifiers.Where(ui => ui.Id == guid).FirstOrDefault();
+            db.UserIdentifiers.Remove(deleteIdentifier);
+            db.SaveChanges();
+        }
+
         private void FullRemoveUserFromDb(FilkioCrmContext db, UserEntity deleteUser)
         {
             if (deleteUser != null)
@@ -171,6 +180,73 @@ namespace WebsiteCRM.Controllers
                 db.SaveChanges();
             }
         }
+        [HttpPost("updatMy Requesteuseridentifier")]
+        public void UpdateUserIdentifier(UpdateUserIdentifierRequest updateRequest)
+        {
+            var db = new FilkioCrmContext();
+            var updateUserIdentifier = db.UserIdentifiers.Where(ui => ui.Id == updateRequest.UserIdentifierId).FirstOrDefault();
+            if (updateUserIdentifier != null)
+            {
+                updateUserIdentifier.Value = updateRequest.Value;
+                updateUserIdentifier.UserIdentifierTypeEntity = db.UserIdentifierTypes.Where(uit => uit.Id == updateRequest.TypeId).FirstOrDefault();
+                db.SaveChanges();
+            }
+        }
+        //PUT методы
+        [HttpPut("createuser")]
+        public void CreateUser(CreateUserRequest createRequest)
+        {
+            var db = new FilkioCrmContext();
+            var user = new UserEntity();
+            user.Id = Guid.NewGuid();
+            user.FirstName = createRequest.FirstName;
+            user.MiddleName = createRequest.MiddleName;
+            user.LastName = createRequest.LastName;
+            user.DateOfBirth = createRequest.DateOfBirth;
+            user.ChildrenQuantity = createRequest.ChildrenQuantity;
+            user.Age = DateTime.Now.Year - createRequest.DateOfBirth.Year;
+            user.UserTypeEntity = db.UserTypes.Where(ut => ut.Id == createRequest.TypeId).FirstOrDefault();
+            user.SourceEntity = db.Sources.Where(s => s.Id == createRequest.SourceId).FirstOrDefault();
+            db.Users.Add(user);
+            db.SaveChanges();
+        }
+        [HttpPut("createsource")]
+        public void CreateSource(CreateSourceRequest createRequest)
+        {
+            var db = new FilkioCrmContext();
+            var source = new SourceEntity();
+            source.Id = Guid.NewGuid();
+            source.Name = createRequest.Name;
+            source.SecretKey = createRequest.SecretKey;
+            db.Sources.Add(source);
+            db.SaveChanges();
+        }
+        [HttpPut("createsegment")]
+        public void CreateSegment(CreateSegmentRequest createRequest)
+        {
+            var db = new FilkioCrmContext();
+            var segment = new SegmentEntity();
+            segment.Id = Guid.NewGuid();
+            segment.Name = createRequest.Name;
+            segment.SqlExpression = createRequest.SqlExpression;
+            segment.IsActive = createRequest.IsActive;
+            segment.Cron = createRequest.Cron;
+            db.Segments.Add(segment);
+            db.SaveChanges();
+        }
+        [HttpPut("createuseridentifier")]
+        public void CreateUserIdentifier(CreateUserIdentifierRequest createRequest)
+        {
+            var db = new FilkioCrmContext();
+            var userIdentifier = new UserIdentifierEntity();
+            userIdentifier.Id = Guid.NewGuid();
+            userIdentifier.Value = createRequest.Value;
+            userIdentifier.UserEntity = db.Users.Where(u => u.Id == createRequest.UserId).FirstOrDefault();
+            userIdentifier.UserIdentifierTypeEntity = db.UserIdentifierTypes.Where(uit => uit.Id == createRequest.TypeId).FirstOrDefault();
+            db.UserIdentifiers.Add(userIdentifier);
+            db.SaveChanges();
+        }
+
 
     }
 }
