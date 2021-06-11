@@ -62,8 +62,12 @@ function GetUsers(elem)
             tr.appendChild(th);
             keys.push(key);
         }
+        let thmoves = document.createElement('th');
+        thmoves.innerHTML = "Действия:";
+        tr.appendChild(thmoves);
         thead.appendChild(tr);
         table.appendChild(thead);
+
 
         usersArr.forEach(function (arrayItem) {
             let tr = document.createElement('tr');
@@ -72,6 +76,22 @@ function GetUsers(elem)
                 td.innerHTML = arrayItem[key];
                 tr.appendChild(td);
             });
+            let aopen = document.createElement('a');
+            aopen.innerHTML = "Открыть";
+            aopen.classList.add('nav-link');
+            aopen.href = "#";
+            aopen.onclick = function () { OpenUser(arrayItem["ID"]); };
+            let adelete = document.createElement('a');
+            adelete.innerHTML = "Удалить";
+            adelete.classList.add('nav-link');
+            adelete.onclick = function () { DeleteUser(arrayItem["ID"]); };
+            adelete.href = "#";
+
+            let tdmoves = document.createElement('td');
+
+            tdmoves.appendChild(aopen);
+            tdmoves.appendChild(adelete);
+            tr.appendChild(tdmoves);
             tbody.appendChild(tr);
         });
         table.appendChild(tbody);
@@ -124,6 +144,15 @@ function GetSegments(elem)
         });
         table.appendChild(tbody);
     };
+}
+
+function OpenUser(currentGuid)
+{
+    alert('OpenUser: ' + currentGuid);
+}
+function DeleteUser(currentGuid)
+{
+    alert('DeleteUser: ' + currentGuid);
 }
 
 
