@@ -1,4 +1,4 @@
-﻿function GetSources(elem) {
+function GetSources(elem) {
     MenuDisabled(elem);
     let table = document.getElementById('myTable');
     while (table.firstChild)
@@ -11,7 +11,7 @@
     xhr.open('GET', 'https://localhost:44306/api/getsources');
     xhr.responseType = 'json';
     xhr.send();
-
+//test
     xhr.onload = function () {
         let sourcesArr = xhr.response;
         let keys = [];
