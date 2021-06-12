@@ -11,7 +11,6 @@ function GetSources(elem) {
     xhr.open('GET', 'https://localhost:44306/api/getsources');
     xhr.responseType = 'json';
     xhr.send();
-//test commit
     xhr.onload = function () {
         let sourcesArr = xhr.response;
         let keys = [];
