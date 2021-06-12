@@ -49,7 +49,7 @@ function GetUsers(elem)
     //создаем теги для таблицы
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
-    //отправляем запрос на бек
+    //отправляем запрос на апи
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://localhost:44306/api/getusers');
     xhr.responseType = 'json';
@@ -163,25 +163,31 @@ function GetSegments(elem)
 
 function OpenUser(currentGuid)
 {
+  //заглушка. сделать вывод таблицы при нажатии на кнопку.
     alert('OpenUser: ' + currentGuid);
 }
 function DeleteUser(currentGuid)
 {
+  //заглушка. сделать вывод таблицы при нажатии на кнопку
     alert('DeleteUser: ' + currentGuid);
 }
 function OpenSegment(currentGuid)
 {
+  //заглушка. сделать вывод таблицы при нажатии на кнопку
     alert('OpenSegment: ' + currentGuid);
 }
 function DeleteSegment(currentGuid)
 {
+  //заглушка. сделать вывод таблиця при нажатии на кнопку
     alert('DeleteSegment: ' + currentGuid);
 }
 function OpenSource(currentGuid)
 {
+  //заглушка. сделать вывод таюлицы при нажатии на кнопку
     alert('OpenSource: ' + currentGuid);
 }
 function DeleteSource(currentGuid)
 {
+  //заглушка. сделать вывод таблицы при нажатии на кнопкк
     alert('DeleteSource: ' + currentGuid;
 }
