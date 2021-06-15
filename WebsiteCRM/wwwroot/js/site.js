@@ -1,10 +1,6 @@
 function GetSources(elem) {
     MenuDisabled(elem);
-    let table = document.getElementById('myTable');
-    while (table.firstChild)
-    {
-        table.removeChild(table.firstChild);
-    }
+    ClearTable();
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
     let xhr = new XMLHttpRequest();
@@ -40,12 +36,8 @@ function GetUsers(elem)
 {
   //отключаем кнопку меню и включаем остальные
     MenuDisabled(elem);
-    //получаем таблицу и чистим ее элементы
-    let table = document.getElementById('myTable');
-    while (table.firstChild)
-    {
-        table.removeChild(table.firstChild);
-    }
+    //чистим таблицу
+    ClearTable();
     //создаем теги для таблицы
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
@@ -124,10 +116,7 @@ function MenuDisabled(elem)
 function GetSegments(elem)
 {
     MenuDisabled(elem);
-    let table = document.getElementById('myTable');
-    while (table.firstChild) {
-        table.removeChild(table.firstChild);
-    }
+    ClearTable();
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
     let xhr = new XMLHttpRequest();
@@ -190,4 +179,14 @@ function DeleteSource(currentGuid)
 {
   //заглушка. сделать вывод таблицы при нажатии на кнопкк
     alert('DeleteSource: ' + currentGuid;
+}
+function ClearTable()
+{
+  //получаем тег с таблицей
+  let table = document.getElementById('myTable');
+  //чистим все дочерние
+    while (table.firstChild)
+    {
+        table.removeChild(table.firstChild);
+    }
 }
