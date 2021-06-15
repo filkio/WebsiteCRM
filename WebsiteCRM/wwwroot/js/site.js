@@ -1,25 +1,41 @@
 function GetSources(elem) {
+  //отключаем кнопку меню и включаем остальные
     MenuDisabled(elem);
+    //чистим таблицу
     ClearTable();
+    //создаём теги для таблицы
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
+   // отправляем запрос на апи
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://localhost:44306/api/getsources');
     xhr.responseType = 'json';
     xhr.send();
+    //как только ответ получен выполняем функцию
     xhr.onload = function () {
+      //массив сорсов
         let sourcesArr = xhr.response;
+        // массив ключей первого сорса
         let keys = [];
+        //тег строки для заголовков
         let tr = document.createElement('tr');
+        //получаем заголовки из первого сорса и заполняем первую строку таблицы
         for (key in sourcesArr[0]) {
             var th = document.createElement('th');
             th.innerHTML = key;
             tr.appendChild(th);
             keys.push(key);
         }
+        //тег для названия в первой колонке
+        let thmoves = document.createElement('th');
+        thmoves.innerHTML = "Действия:";
+        //кладем в первую строку таблицы
+        tr.appendChild(thmoves);
+        //кладем первую строку таблицы в тег thead
         thead.appendChild(tr);
+        //кладем thead в таблицу
         table.appendChild(thead);
-
+   //на каждый источник создаем строку с его данными в тегах td.
         sourcesArr.forEach(function (arrayItem) {
             let tr = document.createElement('tr');
             keys.forEach(function (key) {
@@ -27,6 +43,7 @@ function GetSources(elem) {
                 td.innerHTML = arrayItem[key];
                 tr.appendChild(td);
             });
+            //дописать отсюда до строчки которая ниже
             tbody.appendChild(tr);
         });
         table.appendChild(tbody);
@@ -46,7 +63,7 @@ function GetUsers(elem)
     xhr.open('GET', 'https://localhost:44306/api/getusers');
     xhr.responseType = 'json';
     xhr.send();
-    //как только ответ будет получен делаем функцию
+    //как только ответ получен выполняем функцию
     xhr.onload = function () {
       //массив пользователей
         let usersArr = xhr.response;
