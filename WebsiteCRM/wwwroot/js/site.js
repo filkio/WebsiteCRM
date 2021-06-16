@@ -1,8 +1,12 @@
 function GetSources(elem) {
   //отключаем кнопку меню и включаем остальные
     MenuDisabled(elem);
-    //чистим таблицу
-    ClearTable();
+    //получаем тег с таблицей
+    let table = document.getElementById('myTable');
+    //чистим все дочерние
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }  
     //создаём теги для таблицы
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
@@ -43,18 +47,40 @@ function GetSources(elem) {
                 td.innerHTML = arrayItem[key];
                 tr.appendChild(td);
             });
-            //дописать отсюда до строчки которая ниже
+            //создаем теги ссылок. ссылки кликабельны и при клике вызывают метод с id записи.
+            let aopen = document.createElement('a');
+            aopen.innerHTML = "Открыть";
+            aopen.classList.add('nav-link');
+            aopen.href = "#";
+            aopen.onclick = function () { OpenSource(arrayItem["ID"]); };
+            let adelete = document.createElement('a');
+            adelete.innerHTML = "Удалить";
+            adelete.classList.add('nav-link');
+            adelete.onclick = function () { DeleteSource(arrayItem["ID"]); };
+            adelete.href = "#";
+            //кладем теги с действиями в тег колонки таблицы
+            let tdmoves = document.createElement('td');
+            tdmoves.appendChild(aopen);
+            tdmoves.appendChild(adelete);
+            //кладем тег с действиями в тег строки пользователю
+            tr.appendChild(tdmoves);
+            //добавляем готовую строку в тег tbody
             tbody.appendChild(tr);
         });
+        //добавляем собранный тег tbody в таблицу
         table.appendChild(tbody);
     };
 }
 function GetUsers(elem)
 {
-  //отключаем кнопку меню и включаем остальные
+    //отключаем кнопку меню и включаем остальные
     MenuDisabled(elem);
-    //чистим таблицу
-    ClearTable();
+    //получаем тег с таблицей
+    let table = document.getElementById('myTable');
+    //чистим все дочерние
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }    
     //создаем теги для таблицы
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
@@ -133,7 +159,12 @@ function MenuDisabled(elem)
 function GetSegments(elem)
 {
     MenuDisabled(elem);
-    ClearTable();
+    //получаем тег с таблицей
+    let table = document.getElementById('myTable');
+    //чистим все дочерние
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }  
     let tbody = document.createElement('tbody');
     let thead = document.createElement('thead');
     let xhr = new XMLHttpRequest();
@@ -195,15 +226,5 @@ function OpenSource(currentGuid)
 function DeleteSource(currentGuid)
 {
   //заглушка. сделать вывод таблицы при нажатии на кнопкк
-    alert('DeleteSource: ' + currentGuid;
-}
-function ClearTable()
-{
-  //получаем тег с таблицей
-  let table = document.getElementById('myTable');
-  //чистим все дочерние
-    while (table.firstChild)
-    {
-        table.removeChild(table.firstChild);
-    }
+    alert('DeleteSource: ' + currentGuid);
 }
