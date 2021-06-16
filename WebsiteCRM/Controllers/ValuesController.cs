@@ -31,6 +31,13 @@ namespace WebsiteCRM.Controllers
             }
             return list;
         }
+        [HttpGet("getuser/{userGuid}")]
+        public UsersResponce GetUser(Guid userGuid)
+        {
+            var db = new FilkioCrmContext();
+            var dbUser = db.Users.Where(u => u.Id == userGuid).Include(source => source.SourceEntity).Include(type => type.UserTypeEntity).FirstOrDefault();
+            return new UsersResponce(dbUser);
+        }
         [HttpGet("getsources")]
         public IEnumerable<SourcesResponce> GetSources()
         {

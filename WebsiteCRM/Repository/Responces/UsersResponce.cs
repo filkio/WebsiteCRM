@@ -12,7 +12,7 @@ namespace WebsiteCRM.Repository.Responces
         [JsonPropertyName("ID")]
         public Guid Id { get; set; }
         [JsonPropertyName("Источник")]
-        public Guid SourceId { get; set; }
+        public string SourceName { get; set; }
         [JsonPropertyName("Тип")]
         public string Type { get; set; }
         [JsonPropertyName("Фамилия")]
@@ -37,7 +37,7 @@ namespace WebsiteCRM.Repository.Responces
             LastName = userEntity.LastName;
             MiddleName = userEntity.MiddleName;
             if(userEntity.SourceEntity != null)
-            SourceId = userEntity.SourceEntity.Id;
+            SourceName = userEntity.SourceEntity.Name;
             Type = userEntity.UserTypeEntity.Type;
         }
     }
