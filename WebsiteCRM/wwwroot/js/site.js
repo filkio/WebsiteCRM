@@ -282,8 +282,25 @@ function OpenUser(currentGuid)
                 let option = document.createElement('option');
                 option.innerHTML = user[key];
                 option.setAttribute('selected', '');
+                option.setAttribute('disabled', 'disabled');
                 input.appendChild(option);
                 input.classList.add('form-control');
+                //запрос всех источников
+                let xhrsource = new XMLHttpRequest();
+                xhrsource.open('GET', 'https://localhost:44306/api/getsourcenames/');
+                xhrsource.responseType = 'json';
+                xhrsource.send();
+                //как только ответ получен выполняем функцию
+                xhrsource.onload = function ()
+                {
+                    let sourceNamesArr = xhrsource.response;
+                    sourceNamesArr.forEach(sourceName => {
+                        let sourceNameOption = document.createElement('option');
+                        sourceNameOption.innerHTML = sourceName;
+                        input.appendChild(sourceNameOption);
+                    });                   
+                };
+                 
             }
             if (key == 'Тип')
             {
@@ -357,3 +374,7 @@ function DeleteSource(currentGuid)
   //заглушка. сделать вывод таблицы при нажатии на кнопкк
     alert('DeleteSource: ' + currentGuid);
 }
+//function GetSourceNames()
+//{
+
+//}

@@ -75,6 +75,18 @@ namespace WebsiteCRM.Controllers
             return list;
 
         }
+        [HttpGet("getsourcenames")]
+        public IEnumerable<string> GetSourceNames()
+        {
+            var db = new FilkioCrmContext();
+            var list = db.Sources;
+            List<string> names = new List<string>();
+            foreach (var item in list)
+            {
+                names.Add(item.Name);
+            }
+            return names;
+        }
         //DELETE методы
         [HttpDelete("removeuser/{guid}")]
         public void RemoveUser(Guid guid)
