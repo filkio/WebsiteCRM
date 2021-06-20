@@ -271,7 +271,7 @@ function OpenUser(currentGuid)
             if (key == 'ID')
             {
                 input.type = 'text';
-                input.setAttribute('disabled', 'disabled');
+                input.setAttribute('readonly', 'readonly');
                 input.value = user[key];
                 input.classList.add('form-control');
             }
@@ -352,6 +352,7 @@ function OpenUser(currentGuid)
         inputButton.value = 'Сохранить';
         inputButton.classList.add('btn');
         inputButton.classList.add('btn-success');
+        inputButton.onclick = function () { UpdateUser(); };
         //TODO: добавить кнопке обработчик события на onclick, отправить post запрос, дождаться ответа ОК и вернуться в таблицу
         div.appendChild(inputButton);
         form.appendChild(div);
@@ -365,10 +366,52 @@ function OpenUser(currentGuid)
     };
 
 }
+function UpdateUser()
+{
+    //Получаем все данные с формы
+    let id = document.getElementById("ID").value;
+    let selectSource = document.getElementById("selectSource");
+    let source = selectSource.options[selectSource.selectedIndex].text;
+    let selectUserType = document.getElementById("selectType");
+    let userType = selectUserType.options[selectUserType.selectedIndex].text;
+    let middlename = document.getElementById("Фамилия").value;
+    let firstname = document.getElementById("Имя").value;
+    let lastname = document.getElementById("Отчество").value;
+    let childrenQuantity = Number(document.getElementById("Количество детей").value);
+    let dateOfBirth = document.getElementById("Дата рождения").value; 
+    //let sourceInput = document.getElementById("selectSource").options.selectedIndex.text;
+    //let sourceInput = document.getElementById("selectSource").options.selectedIndex.value;
+    //Суём в жсон
+    console.log(id);
+    var updateUser = JSON.stringify({
+        "UserId": id,
+        "Source": source,
+        "UserType": userType,
+        "FirstName": firstname,
+        "MiddleName": middlename,
+        "LastName": lastname,
+        "ChildrenQuantity": childrenQuantity,
+        "DateOfBirth": dateOfBirth
+    });
+    //Отправляем запрос на бек
+    let xhrUpdateUser = new XMLHttpRequest();
+    xhrUpdateUser.open('POST', 'https://localhost:44306/api/updateuser');
+    xhrUpdateUser.responseType = 'json';
+    xhrUpdateUser.setRequestHeader("Content-Type", "application/json");
+    xhrUpdateUser.send(updateUser);
+}
 function DeleteUser(currentGuid)
 {
-  //заглушка. сделать вывод таблицы при нажатии на кнопку
-    alert('DeleteUser: ' + currentGuid);
+    //отправляем запрос на апи
+    let xhr = new XMLHttpRequest();
+    xhr.open('DELETE', 'https://localhost:44306/api/removeuser/' + currentGuid);
+    xhr.responseType = 'json';
+    xhr.send();
+    let menuItem = document.getElementById('menu-item1');
+    //как только ответ получен выполняем обновление таблицы
+    xhr.onload = function () {
+        GetUsers(menuItem);
+        };
 }
 function OpenSegment(currentGuid)
 {
@@ -390,7 +433,3 @@ function DeleteSource(currentGuid)
   //заглушка. сделать вывод таблицы при нажатии на кнопкк
     alert('DeleteSource: ' + currentGuid);
 }
-//function GetSourceNames()
-//{
-
-//}

@@ -16,11 +16,11 @@ namespace WebsiteCRM.Repository.Responces
         [JsonPropertyName("Тип")]
         public string Type { get; set; }
         [JsonPropertyName("Фамилия")]
-        public string FirstName { get; set; }
-        [JsonPropertyName("Имя")]
-        public string LastName { get; set; }
-        [JsonPropertyName("Отчество")]
         public string MiddleName { get; set; }
+        [JsonPropertyName("Имя")]
+        public string FirstName { get; set; }
+        [JsonPropertyName("Отчество")]
+        public string LastName { get; set; }
         [JsonPropertyName("Возраст")]
         public int Age { get; set; }
         [JsonPropertyName("Количество детей")]

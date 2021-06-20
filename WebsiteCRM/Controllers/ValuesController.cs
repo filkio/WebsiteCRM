@@ -174,14 +174,15 @@ namespace WebsiteCRM.Controllers
             var updateUser = db.Users.Where(u => u.Id == updateRequest.UserId).FirstOrDefault();
             if (updateUser != null)
             {
-                updateUser.Age = updateRequest.Age;
+
                 updateUser.ChildrenQuantity = updateRequest.ChildrenQuantity;
                 updateUser.DateOfBirth = updateRequest.DateOfBirth;
+                updateUser.Age = DateTime.Now.Year - updateUser.DateOfBirth.Year;
                 updateUser.FirstName = updateRequest.FirstName;
                 updateUser.MiddleName = updateRequest.MiddleName;
                 updateUser.LastName = updateRequest.LastName;
-                updateUser.UserTypeEntity = db.UserTypes.Where(ut => ut.Id == updateRequest.TypeId).FirstOrDefault();
-                updateUser.SourceEntity = db.Sources.Where(s => s.Id == updateRequest.SourceId).FirstOrDefault();
+                updateUser.UserTypeEntity = db.UserTypes.Where(ut => ut.Type == updateRequest.UserType).FirstOrDefault();
+                updateUser.SourceEntity = db.Sources.Where(s => s.Name == updateRequest.Source).FirstOrDefault();
                 db.SaveChanges();
             }
         }
