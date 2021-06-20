@@ -309,8 +309,24 @@ function OpenUser(currentGuid)
                 let option = document.createElement('option');
                 option.innerHTML = user[key];
                 option.setAttribute('selected', '');
+                option.setAttribute('disabled', 'disabled');
                 input.appendChild(option);
                 input.classList.add('form-control');
+                //запрос всех типов пользователей
+                let xhrusertypes = new XMLHttpRequest();
+                xhrusertypes.open('GET', 'https://localhost:44306/api/getusertypenames/');
+                xhrusertypes.responseType = 'json';
+                xhrusertypes.send();
+                //как только ответ получен выполняем функцию
+                xhrusertypes.onload = function ()
+                {
+                    let userTypesArr = xhrusertypes.response;
+                    userTypesArr.forEach(userType => {
+                        let userTypeOption = document.createElement('option');
+                        userTypeOption.innerHTML = userType;
+                        input.appendChild(userTypeOption);
+                    });
+                };
             }
             if (key == 'Количество детей')
             {

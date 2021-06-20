@@ -87,6 +87,18 @@ namespace WebsiteCRM.Controllers
             }
             return names;
         }
+        [HttpGet("getusertypenames")]
+        public IEnumerable<string> GetUserTypeNames()
+        {
+            var db = new FilkioCrmContext();
+            var list = db.UserTypes;
+            List<string> names = new List<string>();
+            foreach (var item in list)
+            {
+                names.Add(item.Type);
+            }
+            return names;
+        }
         //DELETE методы
         [HttpDelete("removeuser/{guid}")]
         public void RemoveUser(Guid guid)
