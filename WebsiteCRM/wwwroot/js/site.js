@@ -420,8 +420,16 @@ function OpenSegment(currentGuid)
 }
 function DeleteSegment(currentGuid)
 {
-  //заглушка. сделать вывод таблиця при нажатии на кнопку
-    alert('DeleteSegment: ' + currentGuid);
+    //отправляем запрос на апи
+    let xhr = new XMLHttpRequest();
+    xhr.open('DELETE', 'https://localhost:44306/api/removesegment/' + currentGuid);
+    xhr.responseType = 'json';
+    xhr.send();
+    let menuItem = document.getElementById('menu-item2');
+    //как только ответ получен выполняем обновление таблицы
+    xhr.onload = function () {
+        GetSegments(menuItem);
+        };
 }
 function OpenSource(currentGuid)
 {
@@ -430,6 +438,14 @@ function OpenSource(currentGuid)
 }
 function DeleteSource(currentGuid)
 {
-  //заглушка. сделать вывод таблицы при нажатии на кнопкк
-    alert('DeleteSource: ' + currentGuid);
+    //отправляем запрос на апи
+    let xhr = new XMLHttpRequest();
+    xhr.open('DELETE', 'https://localhost:44306/api/removesource/' + currentGuid);
+    xhr.responseType = 'json';
+    xhr.send();
+    let menuItem = document.getElementById('menu-item3');
+    //как только ответ получен выполняем обновление таблицы
+    xhr.onload = function () {
+        GetSources(menuItem);
+        };
 }
