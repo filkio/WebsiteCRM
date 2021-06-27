@@ -50,6 +50,13 @@ namespace WebsiteCRM.Controllers
             }
             return list;
         }
+        [HttpGet("getsource/{sourceGuid}")]
+        public SourcesResponce GetSource(Guid sourceGuid)
+        {
+            var db = new FilkioCrmContext();
+            var dbSource = db.Sources.Where(sc => sc.Id == sourceGuid).FirstOrDefault();
+            return new SourcesResponce(dbSource);
+        }
         [HttpGet("getsegments")]
         public IEnumerable<SegmentsResponce> GetSegments()
         {

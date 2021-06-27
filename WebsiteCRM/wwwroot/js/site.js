@@ -433,8 +433,90 @@ function DeleteSegment(currentGuid)
 }
 function OpenSource(currentGuid)
 {
-  //заглушка. сделать вывод таюлицы при нажатии на кнопку
-    alert('OpenSource: ' + currentGuid);
+    //получаем тег с таблицей
+    let table = document.getElementById('myTable');
+    //создаем теги для формы
+    let form = document.createElement('form');
+    form.method = 'post';
+    //чистим все дочерние
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+    //let div = document.createElement('div');
+    //div.classList.add('form-group');
+    //отправляем запрос на апи
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://localhost:44306/api/getsource/' + currentGuid);
+    xhr.responseType = 'json';
+    xhr.send();
+    //как только ответ получен выполняем функцию
+    xhr.onload = function () {
+        //пользователь
+        let source = xhr.response;
+        //перебираем ключи
+        for (key in source) {
+            //блок для размещения элементов формы по вертикали
+            let div = document.createElement('div');
+
+            let input = document.createElement('input');
+            let label = document.createElement('label');
+            label.innerHTML = key;
+            input.id = key;
+            label.htmlFor = key;
+            if (key == 'Ключ' || key == 'Название') {
+                input.type = 'text';
+                input.value = source[key];
+                input.classList.add('form-control');
+            }
+            if (key == 'ID') {
+                input.type = 'text';
+                input.setAttribute('readonly', 'readonly');
+                input.value = source[key];
+                input.classList.add('form-control');
+            }
+            div.appendChild(label);
+            div.appendChild(input);
+            form.appendChild(div);
+        }
+        //создаем еще кнопку для формы
+        let div = document.createElement('div');
+        let inputButton = document.createElement('input');
+        inputButton.type = 'button';
+        inputButton.value = 'Сохранить';
+        inputButton.classList.add('btn');
+        inputButton.classList.add('btn-success');
+        inputButton.onclick = function () { UpdateSource(); };
+        div.appendChild(inputButton);
+        form.appendChild(div);
+        //создаем строку и ячейку для формы и помещаем строку с формой в таблицу
+        let tr = document.createElement('tr');
+        let td = document.createElement('td');
+        td.appendChild(form);
+        tr.appendChild(td);
+        table.appendChild(tr);
+    };
+}
+function UpdateSource()
+{
+    //Получаем все данные с формы
+    let id = document.getElementById("ID").value;
+    let secretkey = document.getElementById("Ключ").value;
+    let name = document.getElementById("Название").value;
+    //let sourceInput = document.getElementById("selectSource").options.selectedIndex.text;
+    //let sourceInput = document.getElementById("selectSource").options.selectedIndex.value;
+    //Суём в жсон
+    console.log(id);
+    var updateSource = JSON.stringify({
+        "SourceId": id,
+        "Name": name,
+        "SecretKey": secretkey
+    });
+    //Отправляем запрос на бек
+    let xhrUpdateSource = new XMLHttpRequest();
+    xhrUpdateSource.open('POST', 'https://localhost:44306/api/updatesource');
+    xhrUpdateSource.responseType = 'json';
+    xhrUpdateSource.setRequestHeader("Content-Type", "application/json");
+    xhrUpdateSource.send(updateSource);
 }
 function DeleteSource(currentGuid)
 {
